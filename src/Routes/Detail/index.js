@@ -1,4 +1,3 @@
-import React from 'react';
-import Detail from './Detail';
+import DetailContainer from './DetailContainer';
 
-export default Detail;
+export default DetailContainer;

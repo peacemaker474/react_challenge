@@ -1,3 +1,3 @@
-import Movie from "./Movie";
+import MovieContainer from "./MovieContainer";
 
-export default Movie;
+export default MovieContainer;

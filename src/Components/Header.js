@@ -1,11 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import styled from 'styled-components';
+import SearchForm from './SearchForm';
 
 const Header = styled.header`
     width:100%;
     height: 100px;
+    position:fixed;
+    left:0;
+    top:0;
     background-color:rgba(21, 21, 21, .55);
+    z-index: 10;
+    box-shadow: 0px 10px 5px 2px rgba(0, 0, 0, 0.8);
 `;
 
 const Container = styled.div`
@@ -28,13 +34,15 @@ const List = styled.ul`
 `;
 
 const Item = styled.li`
-    :not(:last-child){
+    &:not(:last-child){
         padding-right: 100px;
     }
+    color: ${props => props.current ? "rgba(255, 255, 255, 0.5)" : "white"}
 `;
 
 const MainLink = styled(Link)`
     font-size: 18px;
+    transition: color 0.3s ease-in-out;
 `;
 
 const LogoBox = styled.div`
@@ -44,68 +52,25 @@ const LogoBox = styled.div`
     padding:0 0 15px 15px;
 `;
 
-const SearchContainer = styled.div`
-    width:300px;
-    height: 50px;
-    position: relative;
-`;
 
-const InputContainer = styled.div`
-    border: 1px solid orange;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    border-radius: 25px;
-`;
-
-const SearchBox = styled.div`
-    border: 1px solid white;
-    margin-left: 20px;
-`;
-
-const Search = styled.input`
-    all: unset;
-    width: 190px;
-    height: 40px;
-    font-size: 17px;
-`;
-
-const SearchIcon = styled.div`
-    border: 1px solid red;
-    width: 40px;
-    height: 40px;
-    margin-left: 20px;
-    position: absolute;
-    right: 10%;
-    bottom: 11%;
-`;
-
-export default () => (
-        <Header>
-            <Container>
-                <LogoBox> 1 4 0 5 </LogoBox>
-                <NavBox>
-                    <List>
-                        <Item>
-                            <MainLink to="/"> Home </MainLink>
-                        </Item>
-                        <Item>
-                            <MainLink to="/movie"> Movie </MainLink>
-                        </Item>
-                        <Item>
-                            <MainLink to="/TV"> TV </MainLink>
-                        </Item>
-                    </List>
-                </NavBox>
-                    <SearchContainer>
-                        <InputContainer>
-                                <SearchBox>
-                                    <Search placeholder="검색어를 입력해주세요" />
-                                </SearchBox>    
-                        </InputContainer>
-                        <SearchIcon />
-                    </SearchContainer>
-            </Container>
-        </Header>
-);
+export default withRouter(({location : {pathname}}) => (
+    <Header>
+        <Container>
+            <LogoBox> 1 4 0 5 </LogoBox>
+            <NavBox>
+                <List>
+                    <Item current={pathname === "/"} >
+                        <MainLink to="/"> Home </MainLink>
+                    </Item>
+                    <Item current={pathname === "/movie"}>
+                        <MainLink to="/movie"> Movie </MainLink>
+                    </Item>
+                    <Item current={pathname === "/tv"}>
+                        <MainLink to="/tv"> TV </MainLink>
+                    </Item>
+                </List>
+            </NavBox>
+            <SearchForm />
+        </Container>
+    </Header>
+));
